@@ -7,6 +7,17 @@ on:
     branches: [main]
 
 jobs:
+  sonarqubeScan:
+    name: SonarQubeScan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
+      - name: SonarQube Scan
+        uses: SonarSource/sonarcloud-github-action@v5.0.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   backend:
     runs-on: ubuntu-latest
     defaults:
