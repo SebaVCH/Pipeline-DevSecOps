@@ -1,34 +1,77 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { apiFetch } from './api'
+
+interface Nota {
+  id: number
+  titulo: string
+  contenido: string
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [notas, setNotas] = useState<Nota[]>([])
+  const [titulo, setTitulo] = useState('')
+  const [contenido, setContenido] = useState('')
+  const navigate = useNavigate()
+
+  const cargarNotas = async () => {
+    try {
+      const data = await apiFetch('/mental-notes')
+      setNotas(data)
+    } catch {
+      navigate('/login')
+    }
+  }
+
+  const crearNota = async (e: React.FormEvent) => {
+    e.preventDefault()
+    await apiFetch('/mental-notes', {
+      method: 'POST',
+      body: JSON.stringify({ titulo, contenido }),
+    })
+    setTitulo('')
+    setContenido('')
+    cargarNotas()
+  }
+
+  const logout = () => {
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
+
+  useEffect(() => {
+    cargarNotas()
+  }, [])
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <h1>Mis Notas</h1>
+      <button onClick={logout}>Cerrar sesión</button>
+      <form onSubmit={crearNota}>
+        <input
+          value={titulo}
+          onChange={e => setTitulo(e.target.value)}
+          placeholder="Título"
+          required
+        />
+        <textarea
+          value={contenido}
+          onChange={e => setContenido(e.target.value)}
+          placeholder="Contenido"
+          required
+        />
+        <button type="submit">Guardar Nota</button>
+      </form>
+
+      <ul>
+        {notas.map((n) => (
+          <li key={n.id}>
+            <h3>{n.titulo}</h3>
+            <p>{n.contenido}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 
