@@ -5,15 +5,28 @@ import App from './App'
 import Login from './Login'
 import './index.css'
 import Register from './Register'
+import Dashboard from './Dashboard'; // Tu componente de dashboard
+import RedCirclePage from './RedCirclePage'; // Tu nuevo componente de círculo rojo
 
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<RedCirclePage />} />
+
+        {/* Ruta para la página de login */}
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<RequireAuth><App /></RequireAuth>} />
+
+        {/* Ruta para la página de registro */}
         <Route path="/register" element={<Register />} />
+
+        {/*
+          Ruta para el dashboard.
+          Podrías envolverla en RequireAuth si quieres que solo usuarios logueados accedan.
+          Ejemplo: <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
+        */}
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
