@@ -18,7 +18,7 @@ function Login() {
 
       const data = await res.json()
       console.log('Respuesta del backend:', data)
-      localStorage.setItem('token', data.token) 
+      localStorage.setItem('token', data.message) 
 
       navigate('/dashboard') 
     } catch (err: any) {
