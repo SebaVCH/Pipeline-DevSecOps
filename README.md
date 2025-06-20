@@ -1,28 +1,70 @@
 # Pipeline DevSecOps
 
-Indicaciones para abrir el proyecto
+# Pipeline DevSecOps
 
+## Indicaciones para abrir el proyecto
 
-Primero para iniciar el backend debemos utilizar 
+Este proyecto cuenta con un backend en Go y un frontend en React (TypeScript), estructurado para trabajar con Docker y CI/CD a través de GitHub Actions. A continuación se indican los pasos para ejecutarlo localmente.
+
+---
+
+### 1. Iniciar el backend
+
+Ubícate en la siguiente ruta:
+
+/backend/cmd/
+
+Ejecuta el siguiente comando:
 go run main.go
-En la ruta /backend/cmd/
-Con eso ya podemos iniciar el backend
 
 
-Luego debemos de iniciar el frontend
-Para ello vamos a utilizar
+
+2. Iniciar el frontend
+Ubícate en la siguiente ruta:
+
+/frontend/src/
+
+Ejecuta:
 npm run dev
-Esto se utiliza en la ruta /frontend/src/
 
 
-Una vez levantada la app podemos visualizarla en localhost:5173/login
-Y partir de ahi podemos utilizar
+
+3. Visualizar la aplicación
+Una vez iniciados ambos servicios, puedes acceder a la aplicación desde tu navegador en:
 
 
-/login
-/register
-/admin
-/dashboard
+http://localhost:5173/login
 
 
-Para visualizar los distintos elementos
+
+4. Rutas disponibles
+   
+/login – Inicio de sesión de usuario.
+
+/register – Registro de nuevo usuario.
+
+/admin – Vista exclusiva para el administrador.
+
+/dashboard – Panel principal del usuario.
+
+
+
+
+Tecnologías utilizadas
+Backend: Go, Gin-Gonic, GORM, JWT, SQLite
+
+Frontend: React, TypeScript, Vite
+
+CI/CD: GitHub Actions
+
+Análisis de seguridad: SonarCloud
+
+Contenedores: Docker
+
+
+
+Autores:
+
+Sebastián Andrés Vega Chepillo
+
+Maximiliano Alfredo Pasten Nayem
