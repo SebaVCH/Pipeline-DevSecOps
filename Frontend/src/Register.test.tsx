@@ -32,7 +32,7 @@ const renderComponent = () => {
 describe('Componente Register', () => {
     beforeEach(() => {
         // Espiamos la función fetch global
-        vi.spyOn(global, 'fetch');
+        vi.spyOn(globalThis, 'fetch');
         mockNavigate.mockClear();
     });
 

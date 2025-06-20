@@ -38,7 +38,7 @@ const renderComponent = () => {
 describe('Componente Login', () => {
     beforeEach(() => {
         // Espiamos la función fetch global y localStorage
-        vi.spyOn(global, 'fetch');
+        vi.spyOn(globalThis, 'fetch');
         vi.spyOn(Storage.prototype, 'setItem');
         localStorage.clear();
     });
