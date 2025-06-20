@@ -1,7 +1,5 @@
 # Pipeline DevSecOps
 
-# Pipeline DevSecOps
-
 ## Indicaciones para abrir el proyecto
 
 Este proyecto cuenta con un backend en Go y un frontend en React (TypeScript), estructurado para trabajar con Docker y CI/CD a través de GitHub Actions. A continuación se indican los pasos para ejecutarlo localmente.
