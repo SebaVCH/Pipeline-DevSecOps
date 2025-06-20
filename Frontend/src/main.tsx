@@ -1,19 +1,26 @@
 import { StrictMode, type JSX } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import App from './App'
+import { jwtDecode } from 'jwt-decode'
 import Login from './Login'
 import './index.css'
 import Register from './Register'
 import Dashboard from './Dashboard'; // Tu componente de dashboard
-import RedCirclePage from './RedCirclePage'; // Tu nuevo componente de círculo rojo
+import Menu from './Menu';
 import AdminPanel from './AdminPanel';
+
+interface TokenPayload {
+  user_role?: string;
+  user_id?: number;
+  exp?: number;
+  [key: string]: unknown;
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<RedCirclePage />} />
+        <Route path="/" element={<Menu />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
@@ -35,10 +42,18 @@ function RequireAuth({ children }: { children: JSX.Element }) {
 }
 function RequireAdmin({ children }: { children: JSX.Element }) {
   const token = localStorage.getItem('token');
-  const role = localStorage.getItem('role');
 
   if (!token) return <Navigate to="/login" replace />;
-  if (role == 'admin') return <Navigate to="/dashboard" replace />;
 
-  return children;
+  try {
+    const tokenData = jwtDecode<TokenPayload>(token);
+    const isAdmin = tokenData.user_role === 'admin';
+
+    if (!isAdmin) return <Navigate to="/dashboard" replace />;
+
+    return children;
+  } catch (error) {
+    console.error("Error al verificar rol de administrador:", error);
+    return <Navigate to="/dashboard" replace />;
+  }
 }

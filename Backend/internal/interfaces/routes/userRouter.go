@@ -17,5 +17,5 @@ func SetupUserRouter(r *gin.Engine) {
 	protected.POST("/register", userController.Register)
 	protected.POST("/login", userController.Login)
 	protected.Use(middleware.AuthMiddleware())
-	protected.GET("/users", middleware.RoleMiddleware("admin"), userController.GetAllUsers)
+	protected.GET("/admin/users", middleware.RoleMiddleware("admin"), userController.GetAllUsers)
 }

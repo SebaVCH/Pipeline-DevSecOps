@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 function Register() {
   const [usuario, setUsuario] = useState('')
   const [password, setPassword] = useState('')
   const [confirmar, setConfirmar] = useState('')
-  const [rol, setRol] = useState('user') // Rol por defecto
   const [error, setError] = useState('')
   const navigate = useNavigate()
 
@@ -37,59 +36,149 @@ function Register() {
   }
 
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      minWidth: '210vh',
-      minHeight: '100vh',
-      backgroundColor: '#f5f5f5'
-    }}>
-      <form onSubmit={handleSubmit} style={{
-        backgroundColor: '#fff',
-        padding: '2rem',
-        borderRadius: '8px',
-        boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+      <div style={{
         display: 'flex',
-        flexDirection: 'column',
-        gap: '1rem',
-        width: '100%',
-        maxWidth: '400px'
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        backgroundColor: '#f8f9fa'
       }}>
-        <h2 style={{ textAlign: 'center' }}>Registro</h2>
+        <div style={{
+          backgroundColor: '#fff',
+          borderRadius: '8px',
+          boxShadow: '0 0 20px rgba(0,0,0,0.1)',
+          overflow: 'hidden',
+          width: '100%',
+          maxWidth: '420px'
+        }}>
+          <div style={{
+            backgroundColor: '#28a745',
+            padding: '1.5rem',
+            textAlign: 'center'
+          }}>
+            <h2 style={{
+              color: 'white',
+              margin: '0',
+              fontWeight: '600',
+              fontSize: '1.75rem'
+            }}>Registro de Usuario</h2>
+          </div>
 
-        <input
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
-          placeholder="Usuario"
-          required
-        />
+          <form onSubmit={handleSubmit} style={{
+            padding: '2rem'
+          }}>
+            <div style={{ marginBottom: '1.5rem' }}>
+              <label style={{
+                display: 'block',
+                marginBottom: '0.5rem',
+                fontSize: '0.9rem',
+                fontWeight: '500',
+                color: '#495057'
+              }}>Usuario</label>
+              <input
+                  value={usuario}
+                  onChange={(e) => setUsuario(e.target.value)}
+                  style={{
+                    width: '94%',
+                    padding: '0.75rem',
+                    fontSize: '1rem',
+                    border: '1px solid #ced4da',
+                    borderRadius: '4px',
+                    transition: 'border-color 0.15s ease-in-out'
+                  }}
+                  placeholder="Elija un nombre de usuario"
+                  required
+              />
+            </div>
 
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Contraseña"
-          required
-        />
+            <div style={{ marginBottom: '1.5rem' }}>
+              <label style={{
+                display: 'block',
+                marginBottom: '0.5rem',
+                fontSize: '0.9rem',
+                fontWeight: '500',
+                color: '#495057'
+              }}>Contraseña</label>
+              <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  style={{
+                    width: '94%',
+                    padding: '0.75rem',
+                    fontSize: '1rem',
+                    border: '1px solid #ced4da',
+                    borderRadius: '4px',
+                    transition: 'border-color 0.15s ease-in-out'
+                  }}
+                  placeholder="Cree una contraseña"
+                  required
+              />
+            </div>
 
-        <input
-          type="password"
-          value={confirmar}
-          onChange={(e) => setConfirmar(e.target.value)}
-          placeholder="Confirmar contraseña"
-          required
-        />
+            <div style={{ marginBottom: '1.5rem' }}>
+              <label style={{
+                display: 'block',
+                marginBottom: '0.5rem',
+                fontSize: '0.9rem',
+                fontWeight: '500',
+                color: '#495057'
+              }}>Confirmar Contraseña</label>
+              <input
+                  type="password"
+                  value={confirmar}
+                  onChange={(e) => setConfirmar(e.target.value)}
+                  style={{
+                    width: '94%',
+                    padding: '0.75rem',
+                    fontSize: '1rem',
+                    border: '1px solid #ced4da',
+                    borderRadius: '4px',
+                    transition: 'border-color 0.15s ease-in-out'
+                  }}
+                  placeholder="Repita la contraseña"
+                  required
+              />
+            </div>
 
-        <select value={rol} onChange={(e) => setRol(e.target.value)} required>
-          <option value="user">Usuario</option>
-          <option value="admin">Administrador</option>
-        </select>
+            <button type="submit" style={{
+              width: '100%',
+              padding: '0.75rem',
+              backgroundColor: '#28a745',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              fontSize: '1rem',
+              fontWeight: '500',
+              cursor: 'pointer',
+              transition: 'background-color 0.15s ease-in-out',
+              marginBottom: '1rem'
+            }}>Registrarse</button>
 
-        <button type="submit">Registrarse</button>
-        {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
-      </form>
-    </div>
+            {error && <p style={{
+              color: '#dc3545',
+              textAlign: 'center',
+              margin: '1rem 0',
+              padding: '0.5rem',
+              backgroundColor: '#f8d7da',
+              borderRadius: '4px'
+            }}>{error}</p>}
+
+            <p style={{
+              textAlign: 'center',
+              marginTop: '1rem',
+              fontSize: '0.9rem',
+              color: '#6c757d'
+            }}>
+              ¿Ya tienes cuenta? <Link to="/login" style={{
+              color: '#28a745',
+              textDecoration: 'none',
+              fontWeight: '500'
+            }}>Inicia sesión aquí</Link>
+            </p>
+          </form>
+        </div>
+      </div>
   )
 }
 

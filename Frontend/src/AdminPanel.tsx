@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiFetch } from './api';
 
@@ -19,6 +19,10 @@ function AdminPanel() {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [notas, setNotas] = useState<Nota[]>([]);
   const navigate = useNavigate();
+  const logout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
 
   const token = localStorage.getItem('token');
 
@@ -39,9 +43,10 @@ function AdminPanel() {
           Authorization: `Bearer ${token}`,
         },
       });
-      setUsuarios(data);
+      setUsuarios(data.message || []);
     } catch (err) {
       console.error('Error al cargar usuarios:', err);
+      setUsuarios([])
     }
   };
 
@@ -65,7 +70,28 @@ function AdminPanel() {
         color: '#212529', // Dark text for contrast
         fontFamily: 'Arial, sans-serif'
     }}>
-      <h1>Panel de Administración</h1>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: '1rem'
+      }}>
+        <h1>Panel de Administración</h1>
+        <button
+            onClick={logout}
+            style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: '#dc3545',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontWeight: 'bold'
+            }}
+        >
+          Cerrar sesión
+        </button>
+      </div>
 
       <h2>Usuarios</h2>
       <table style={{
