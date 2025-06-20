@@ -1,0 +1,22 @@
+services:
+  backend:
+    build: ./Backend
+    ports:
+      - "8080:8080"
+    networks:
+      - appnet
+    env_file:
+      - ./Backend/.env
+    volumes:
+      - ./Backend/mentalNoteDB.db:/app/mentalNoteDB.db
+  frontend:
+    build: ./Frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - appnet
+
+networks:
+  appnet:

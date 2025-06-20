@@ -51,3 +51,19 @@ jobs:
 
       - name: Build
         run: npm run build --if-present
+
+  build-backend-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
+
+      - name: Build Backend Docker image
+        run: docker build -t backend-test ./Backend
+
+  build-frontend-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
+
+      - name: Build Frontend Docker image
+        run: docker build -t frontend-test ./Frontend
