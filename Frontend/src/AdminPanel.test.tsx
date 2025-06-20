@@ -9,16 +9,6 @@ vi.mock('./api', () => ({
     apiFetch: vi.fn(),
 }));
 
-const mockUsers = [
-    { ID: 1, Username: 'admin', Role: 'admin' },
-    { ID: 2, Username: 'testuser', Role: 'user' },
-];
-
-const mockNotes = [
-    { ID: 101, Title: 'Nota importante', Description: 'Contenido de la nota.', Author: { Username: 'testuser' } },
-    { ID: 102, Title: 'Otra nota', Description: 'Más contenido.', Author: { Username: 'admin' } },
-];
-
 describe('AdminPanel', () => {
     // Antes de cada prueba, simulamos que hay un token de admin en localStorage
     beforeEach(() => {
