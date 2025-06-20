@@ -27,9 +27,9 @@ function Login() {
       const data = await res.json()
       console.log('Respuesta del backend:', data)
 
-      if (!res.ok) throw new Error(data.error || 'Error al iniciar sesión')
+      if (!res.ok) throw new Error(data.error ?? 'Error al iniciar sesión')
 
-      const token = data.message || data.token
+      const token = data.message
       localStorage.setItem('token', token)
 
       try {

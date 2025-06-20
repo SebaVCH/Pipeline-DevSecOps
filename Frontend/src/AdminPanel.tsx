@@ -43,7 +43,7 @@ function AdminPanel() {
           Authorization: `Bearer ${token}`,
         },
       });
-      setUsuarios(data.message || []);
+      setUsuarios(data.message ?? []);
     } catch (err) {
       console.error('Error al cargar usuarios:', err);
       setUsuarios([])
