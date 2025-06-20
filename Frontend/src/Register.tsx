@@ -22,8 +22,7 @@ function Register() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           username: usuario,
-          password,
-          role: rol,
+          password
         }),
       })
 
