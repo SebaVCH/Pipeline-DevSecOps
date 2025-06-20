@@ -18,9 +18,19 @@ function Login() {
 
       const data = await res.json()
       console.log('Respuesta del backend:', data)
-      localStorage.setItem('token', data.message) 
 
-      navigate('/dashboard') 
+      if (!res.ok) throw new Error(data.error || 'Error al iniciar sesión')
+
+      // Guarda el token y el rol
+      localStorage.setItem('token', data.message)
+      localStorage.setItem('role', data.role)
+
+      // Redirige según el rol
+      if (data.role === 'admin') {
+        navigate('/admin')
+      } else {
+        navigate('/dashboard')
+      }
     } catch (err: any) {
       setError(err.message)
     }

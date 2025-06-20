@@ -75,6 +75,20 @@ function Dashboard() {
     }
   };
 
+  const eliminarNota = async (id: number) => {
+  try {
+    await apiFetch(`/mental-notes/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    cargarNotas(); // Recargar notas tras eliminar
+  } catch (error) {
+    console.error('Error al eliminar la nota:', error);
+  }
+};
+
   const logout = () => {
     localStorage.removeItem('token');
     navigate('/login');
@@ -83,7 +97,7 @@ function Dashboard() {
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
-        <h1>Dashboard de Notas hola</h1>
+        <h1>Dashboard de Notas haaaaola</h1>
         <button onClick={logout} className="logout-button">Cerrar sesión</button>
       </div>
 
@@ -116,6 +130,8 @@ function Dashboard() {
               <li key={nota.id} className="note-card">
                 <h3>{nota.titulo}</h3>
                 <p>{nota.contenido}</p>
+                <button onClick={() => eliminarNota(nota.id)}>Eliminar</button>
+
               </li>
             ))}
           </ul>

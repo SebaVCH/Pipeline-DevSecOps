@@ -7,27 +7,23 @@ import './index.css'
 import Register from './Register'
 import Dashboard from './Dashboard'; // Tu componente de dashboard
 import RedCirclePage from './RedCirclePage'; // Tu nuevo componente de círculo rojo
-
+import AdminPanel from './AdminPanel';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<RedCirclePage />} />
-
-        {/* Ruta para la página de login */}
         <Route path="/login" element={<Login />} />
-
-        {/* Ruta para la página de registro */}
         <Route path="/register" element={<Register />} />
 
-        {/*
-          Ruta para el dashboard.
-          Podrías envolverla en RequireAuth si quieres que solo usuarios logueados accedan.
-          Ejemplo: <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
-        */}
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
+        {/* Ruta protegida para el dashboard */}
+        <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
+
+        {/* Ruta protegida para el panel de administración */}
+        <Route path="/admin" element={<RequireAdmin><AdminPanel /></RequireAdmin>} />
+        </Routes>
+
     </BrowserRouter>
   </StrictMode>
 )
@@ -36,4 +32,13 @@ createRoot(document.getElementById('root')!).render(
 function RequireAuth({ children }: { children: JSX.Element }) {
   const token = localStorage.getItem('token')
   return token ? children : <Navigate to="/login" replace />
+}
+function RequireAdmin({ children }: { children: JSX.Element }) {
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
+
+  if (!token) return <Navigate to="/login" replace />;
+  if (role == 'admin') return <Navigate to="/dashboard" replace />;
+
+  return children;
 }
